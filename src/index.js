@@ -1,12 +1,21 @@
-import { Task, addToStorage, getFromStorage } from "./task";
+import {
+  Task,
+  addToStorage,
+  getFromStorage,
+  deleteTask,
+  getTask,
+  updateValue,
+} from "./task";
 
 const teste = new Task("teste", "vamove", "16/06", 1, false);
 const teste2 = new Task("teste2", "vamove2", "16/062", 2, true);
-export let task = [];
 
 addToStorage(teste);
 addToStorage(teste2);
 
 getFromStorage();
+// it changes, just doesnt update the array
+teste.updateValue("querove", "title");
+console.log(teste);
 
-console.dir(task[0]);
+getTask();
