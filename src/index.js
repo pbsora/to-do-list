@@ -6,6 +6,10 @@ import {
   getTask,
   updateValue,
 } from "./task";
+import "./style.css";
+import populateDom from "./page";
+
+populateDom();
 
 const teste = new Task("teste", "vamove", "16/06", 1, false);
 const teste2 = new Task("teste2", "vamove2", "16/062", 2, true);
