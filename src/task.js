@@ -1,3 +1,5 @@
+import { createTask } from "./page";
+
 export let task = [];
 
 export class Task {
@@ -36,6 +38,7 @@ export function getFromStorage() {
         task.completion
       )
   );
+  return task;
 }
 
 export function updateStorage() {
@@ -53,4 +56,18 @@ export function getTask() {
   console.log(task);
 }
 
-/* export function */
+export function getPosition() {
+  return task.length;
+}
+
+export function newTask(
+  title = "default",
+  description = "default",
+  dueDate = "01/01",
+  priority = 1,
+  completion = false
+) {
+  const newTask = new Task(title, description, dueDate, priority, completion);
+  addToStorage(newTask);
+  createTask(title, description, dueDate, priority, completion);
+}

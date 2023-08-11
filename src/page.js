@@ -1,4 +1,7 @@
-export default function populateDom() {
+import { getPosition, getFromStorage } from "./task";
+const modal = document.querySelector("dialog");
+
+export function populateDom() {
   const main = document.createElement("div");
   main.setAttribute("id", "main");
 
@@ -45,9 +48,12 @@ export default function populateDom() {
 
   const btn = document.createElement("button");
   btn.setAttribute("class", "add-task");
-  const plusSign = document.createElement("p");
+  const plusSign = document.createElement("div");
   plusSign.innerText = "+";
   btn.appendChild(plusSign);
+  btn.addEventListener("click", () => {
+    modal.showModal();
+  });
   sideBar.appendChild(btn);
 
   //Content
@@ -59,5 +65,61 @@ export default function populateDom() {
 }
 
 export function createTask(title, description, date, priority, completion) {
-  //do stuff
+  const content = document.getElementById("content");
+  const position = getPosition();
+
+  //Create task unit
+  const task = document.createElement("div");
+  task.setAttribute("class", `task green-task ${position + 1} `);
+
+  const checkTask = document.createElement("input");
+  checkTask.setAttribute("type", "checkbox");
+  checkTask.setAttribute("class", "check-task");
+  task.appendChild(checkTask);
+  const taskTitle = document.createElement("p");
+  taskTitle.innerText = title;
+  taskTitle.setAttribute("class", "title");
+  task.appendChild(taskTitle);
+  const usabilities = document.createElement("div");
+  //usabilities part
+  usabilities.setAttribute("class", "usabilities");
+  const detailsBtn = document.createElement("button");
+  detailsBtn.setAttribute("class", "details");
+  detailsBtn.innerText = "Details";
+  usabilities.appendChild(detailsBtn);
+  const taskDate = document.createElement("p");
+  taskDate.innerText = date;
+  taskDate.setAttribute("class", "date");
+  usabilities.appendChild(taskDate);
+  //edit icon
+  const editIcon = document.createElement("div");
+  editIcon.setAttribute("class", "edit-icon icon");
+  const editImg = document.createElement("img");
+  editImg.src = "../src/images/edit.svg";
+  editImg.alt = "edit-icon";
+  editIcon.appendChild(editImg);
+  usabilities.appendChild(editIcon);
+
+  //delete icon
+  const deleteIcon = document.createElement("div");
+  deleteIcon.setAttribute("class", "delete-icon icon");
+  const deleteImg = document.createElement("img");
+  deleteImg.src = "../src/images/delete.svg";
+  deleteImg.alt = "delete-icon";
+  deleteIcon.appendChild(deleteImg);
+  usabilities.appendChild(deleteIcon);
+
+  task.appendChild(usabilities);
+
+  content.appendChild(task);
+}
+
+export function populateTasks() {
+  const tasks = getFromStorage();
+  for (let task in tasks) {
+    Object.keys(task).forEach((key) => {
+      console.log(key); // the name of the current key.
+      console.log(task[key]); // the value of the current key.
+    });
+  }
 }
